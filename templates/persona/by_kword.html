@@ -10,5 +10,12 @@
         <input type="text" id="kword" name="kword" placeholder="Ingrese nombre a filtrar">
         <button type="submit">Buscar por: </button>
     </form>
+    <h3>Lista de filtro po palabra clave</h3>
+<ul>
+    {% for e in empleados%}
+        <li>{{ e }}</li>
+    {% endfor %}
+</ul>
+
 </body>
 </html>

@@ -30,5 +30,7 @@ class ListEmpleadosByKword(ListView):
     def get_queryset(self):
         print("*****************")
         palabra_clave = self.request.GET.get("kword", '')
-        print('============', palabra_clave)
-        return[]
+        lista = Empleado.objects.filter(
+            first_name=palabra_clave
+        )
+        return lista
