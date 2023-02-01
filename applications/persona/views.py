@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import (ListView)
+from django.views.generic import (ListView, DetailView)
 
 from .models import Empleado
 
@@ -10,8 +10,9 @@ from .models import Empleado
 # 5.- Listar habilidades de un empleado
 class ListAllEmpleados(ListView):
     template_name = 'persona/list_all.html'
+    paginate_by = 4
     model = Empleado
-    context_object_name = 'lista'
+
 
 class ListByAreaEmpleado(ListView):
     template_name = 'persona/list_by_area.html'
@@ -34,3 +35,20 @@ class ListEmpleadosByKword(ListView):
             first_name=palabra_clave
         )
         return lista
+
+class ListHabilidadesEmpleado(ListView):
+    template_name = 'persona/habilidades.html'
+    context_object_name = 'habilidades'
+
+    def get_queryset(self):
+        empleados = Empleado.objects.get(id=8)
+        return empleados.habilidades.all()
+
+class EmpleadoDetailView(DetailView):
+    model = Empleado
+    template_name = "persona/detail_empleado.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(EmpleadoDetailView, self).get_context_data(**kwargs)
+        context['titulo'] = 'Empleado del mes'
+        return context
