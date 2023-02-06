@@ -1,0 +1,18 @@
+.tabla{
+    margin-top: 8%;
+}
+.active>.page-link, .page-link.active {
+    z-index: 3;
+    color: #fff;
+    background-color: #ff0000;
+    border-color: #ff0000;
+}
+.page-link{
+    color: #262525;
+}
+.fa-pen-to-square{
+    color:green !important;
+}
+.fa-trash-can{
+    color:#ff0000 !important;
+}

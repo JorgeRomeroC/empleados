@@ -1,8 +1,15 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import (ListView, DetailView, CreateView, TemplateView, UpdateView, DeleteView)
-
+from django.utils import timezone
+from django.views.generic import (ListView, DetailView, CreateView, TemplateView, UpdateView, DeleteView, FormView)
 from .models import Empleado
+from .forms import EmpleadoForm
+
+
+class InicioView(TemplateView):
+    """Vista qeu carga la pagina de inicio"""
+    template_name = 'inicio.html'
+
 
 # 1.- Listar todos los empleados de la empresa
 # 2.- Listar todos los empleados que pertenecen a un area de la empresa
@@ -12,11 +19,35 @@ from .models import Empleado
 class ListAllEmpleados(ListView):
     template_name = 'persona/list_all.html'
     paginate_by = 4
+    ordering = 'first_name'
+    context_object_name = 'empleados'
+
+    # FUNCION QUE NOS PERMITA UTILIZAR EL BUSCARDOS DE LA TABLA
+    # LISTAR EMPLEADOS
+    def get_queryset(self):
+        palabra_clave = self.request.GET.get("kword", '')
+        # si full_name es jorge esto buscara todos lo empleados
+        # que contengan ese letra
+        lista = Empleado.objects.filter(
+            full_name__icontains=palabra_clave
+        )
+        return lista
+
+class ListaEmpleadosAdmin(ListView):
+    template_name = 'persona/lista_empleados.html'
+    paginate_by = 10
+    ordering = 'first_name'
+    context_object_name = 'empleados'
     model = Empleado
 
+#==========================================
+# Esta clase es utilizada por Departamento
+# para listar por area
+#==========================================
 
 class ListByAreaEmpleado(ListView):
     template_name = 'persona/list_by_area.html'
+    context_object_name = 'empleados'
     def get_queryset(self):
         area = self.kwargs['shortname']
         lista = Empleado.objects.filter(
@@ -89,7 +120,8 @@ class EmpleadoCreateView(CreateView):
 class EmpleadoUpdateView(UpdateView):
     template_name = "persona/update.html"
     model = Empleado
-    fields = ['first_name', 'last_name', 'job', 'departamento', 'habilidades', ]
+    form_class = EmpleadoForm
+    #fields = ['first_name', 'last_name', 'job', 'departamento', 'habilidades', ]
     success_url = reverse_lazy('persona_app:correcto')
 
     def post(self, request, *args, **kwargs):
