@@ -4,6 +4,10 @@
 # distintas
 #==========================================
 from django import forms
+
+from applications.departamento.models import Departamento
+
+
 class NewDepartamentoForm(forms.Form):
     nombre = forms.CharField(max_length=50,
                              widget=forms.TextInput(attrs={

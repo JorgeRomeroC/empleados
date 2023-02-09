@@ -1,23 +1,26 @@
 {%  extends 'base.html' %}
-
+{% load static %}
 {% block content %}
     {% include "includes/header.html" %}
     <h1>Lista de todos los empleados</h1>
 <div class="container">
 <div class="card text-center mt-5">
   <div class="card-header">
-      <form class="d-flex" method="GET">
+<a type="button" href="{% url 'persona_app:empleado_add' %}" class="btn btn-outline-dark mb-3">Registrar Nuevo</a>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Listado de empleados</h5>
+        <form class="d-flex mb-3" method="GET">
           {% csrf_token %}
           <input class="form-control me-2" id="kword" name="kword" type="search" placeholder="Buscar empleado" aria-label="Search">
           <button class="btn btn-outline-danger" type="submit">Buscar</button>
         </form>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Listado de empleados</h5>
+
     <table class="table table-striped table-hover ">
           <thead class="table-dark">
                 <tr>
                   <th scope="col">ID</th>
+                    <th scope="col">Foto</th>
                   <th scope="col">Nombres</th>
                   <th scope="col">Apellidos</th>
                   <th scope="col">Departamento</th>
@@ -28,6 +31,11 @@
           {% for e in empleados  %}
                 <tr>
                   <th scope="row">{{ e.id}}</th>
+                  {% if e.avatar %}
+                      <td><img src="{{ e.avatar.url }}" style="width:40px;height:40px;" class="rounded mx-auto d-block"></td>
+                  {% else %}
+                      <td><img src="{% static 'img/default.jpeg' %}" style="width:40px;height:40px;" class="rounded mx-auto d-block"></td>
+                  {% endif %}
                   <td>{{e.first_name}}</td>
                   <td>{{e.last_name}}</td>
                   <td>{{e.departamento}}</td>

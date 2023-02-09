@@ -16,3 +16,9 @@
 .fa-trash-can{
     color:#ff0000 !important;
 }
+.habili{
+    display: inline-flex;
+}
+.habili .form-check-input{
+    display: inline-flex;
+}

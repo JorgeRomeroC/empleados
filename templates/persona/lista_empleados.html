@@ -1,5 +1,5 @@
 {%  extends 'base.html' %}
-
+{% load static %}
 {% block content %}
     {% include "includes/header.html" %}
     <h1>Lista de todos los empleados</h1>
@@ -14,6 +14,7 @@
           <thead class="table-dark">
                 <tr>
                   <th scope="col">ID</th>
+                    <th scope="col">Foto</th>
                   <th scope="col">Nombres</th>
                   <th scope="col">Apellidos</th>
                   <th scope="col">Departamento</th>
@@ -25,6 +26,11 @@
           {% for e in empleados  %}
                 <tr>
                   <th scope="row">{{ e.id}}</th>
+                  {% if e.avatar %}
+                      <td><img src="{{ e.avatar.url }}" style="width:40px;height:40px;" class="rounded mx-auto d-block"></td>
+                  {% else %}
+                      <td><img src="{% static 'img/default.jpeg' %}" style="width:40px;height:40px;" class="rounded mx-auto d-block"></td>
+                  {% endif %}
                   <td>{{e.first_name}}</td>
                   <td>{{e.last_name}}</td>
                   <td>{{e.departamento}}</td>
@@ -63,6 +69,7 @@
   <div class="card-footer text-muted">
     2023
   </div>
+
 </div>
 </div>
 {% endblock content%}

@@ -1,17 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle empleado</title>
-</head>
-<body>
-    <h1>Detalle de un empleado {{ titulo }}</h1>
-    {{ empleado }}
-    <h3>Todos los datos</h3>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ object.full_name }}{% endblock title %}
 
-    <p>{{ empleado.first_name}}</p>
-    <p>{{ empleado.last_name}}</p>
-    <p>{{ empleado.departamento}}</p>
-    <p>{{ empleado.habilidades}}</p>
-</body>
-</html>
+{% block content %}
+    {% include 'includes/header.html' %}
+    <div class="container justify-content-center">
+<div class="card text-center tabla">
+    <div class="card" style="width: 18rem;">
+         {% if empleado.avatar %}
+              <img src="{{ empleado.avatar.url }}" class="rounded mx-auto d-block">
+          {% else %}
+              <img src="{% static 'img/default.jpeg' %}" class="rounded mx-auto d-block">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ empleado.full_name}}</h5>
+              <h6 class="card-title">{{ empleado.get_job_display }}</h6>
+            <p class="card-text">{{ empleado.departamento.short_name}}</p>
+          </div>
+          <ul class="list-group list-group-flush">
+              {% for h in empleado.habilidades.all  %}
+                <li class="list-group-item">{{ h.habilidad }}</li>
+              {% endfor %}
+          </ul>
+          <div class="card-body">
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+          </div>
+        </div>
+    </div>
+    </div>
+{% endblock content %}

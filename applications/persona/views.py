@@ -100,14 +100,15 @@ class SuccessView(TemplateView):
 class EmpleadoCreateView(CreateView):
     template_name = "persona/add.html"
     model = Empleado
+    form_class = EmpleadoForm
     #podemos solo pedir algunos campos
-    fields = ['first_name', 'last_name', 'job', 'departamento', 'habilidades',]
+    #fields = ['first_name', 'last_name', 'job', 'departamento', 'habilidades',]
 
     #o pedimos todos los campos de ese modelo
     #fields = ('__all__')
     #con el uso de "reverse_lazy" para la redireccion
     # debemos agregar en las urls.py de la app el atributo name
-    success_url = reverse_lazy('persona_app:correcto')
+    success_url = reverse_lazy('persona_app:empleados_admin')
 
     def form_valid(self, form):
         empleado = form.save()
@@ -122,7 +123,7 @@ class EmpleadoUpdateView(UpdateView):
     model = Empleado
     form_class = EmpleadoForm
     #fields = ['first_name', 'last_name', 'job', 'departamento', 'habilidades', ]
-    success_url = reverse_lazy('persona_app:correcto')
+    success_url = reverse_lazy('persona_app:empleados_admin')
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -136,6 +137,6 @@ class EmpleadoUpdateView(UpdateView):
 class EmpleadoDeleteView(DeleteView):
     model = Empleado
     template_name = "persona/delete.html"
-    success_url = reverse_lazy('persona_app:correcto')
+    success_url = reverse_lazy('persona_app:empleados_admin')
 
 

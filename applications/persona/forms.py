@@ -13,6 +13,7 @@ class EmpleadoForm(forms.ModelForm):
             'job',
             'departamento',
             'habilidades',
+            'avatar',
         )
         widgets = {
             'first_name': forms.TextInput(
@@ -35,16 +36,16 @@ class EmpleadoForm(forms.ModelForm):
                     'class': 'form-select'
                 }
             ),
-            'habilidades': forms.SelectMultiple(
+            'habilidades': forms.CheckboxSelectMultiple(
                 attrs={
-                    'class': 'form-select'
+                    'type': 'checkbox',
+                    'class': 'form-check-input'
+                }
+            ),
+            'avatar': forms.FileInput(
+                attrs={
+                    'class': 'form-control'
                 }
             ),
         }
 
-    def clean_first_name(self):
-        first_name = self.cleaned_data['first_name']
-        if(first_name < 5):
-            raise forms.ValidationError('El nombre debe ser tener mas de 5 caracteres')
-        return first_name
-        

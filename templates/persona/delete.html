@@ -1,14 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Eliminar</h1>
-    <form method="POST"> {% csrf_token %}
-        <P>cONFIRME QUE DESEA ELIMINAR EMPLEADO</P>
-        <button type="submit">Eliminar</button>
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}{% endblock title %}
+
+{% block content %}
+    {% include 'includes/header.html' %}
+    <div class="container">
+        <div class="card text-center tabla">
+              <div class="card-header">
+                {{ object.full_name }}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Eliminar Empleado: <strong style="color:darkred;">{{ object.full_name }}</strong></h5>
+                    <form method="POST"> {% csrf_token %}
+                        <p>Confirme que desea eliminar este empleado</p>
+                        <button class="btn btn-primary" type="submit">Eliminar</button>
+                    </form>
+              </div>
+              <div class="card-footer text-muted">
+                2 days ago
+              </div>
+        </div>
+</div>
+{% endblock content %}

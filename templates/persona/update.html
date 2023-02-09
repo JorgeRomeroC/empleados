@@ -27,10 +27,12 @@
                 <label  class="form-label">{{ form.departamento.label}}</label>
                 {{ form.departamento}}
               </div>
-              <div class="col-md-12">
-                <label class="form-label">{{ form.habilidades.label}}</label>
+
+              <div class="col-md-12 form-check">
+                  <label class="form-check-label" for="inlineCheckbox1">{{ form.habilidades.label}}</label>
                 {{ form.habilidades}}
               </div>
+
               <div class="col-12">
                 <button type="submit" class="btn btn-primary">Actualizar</button>
               </div>
